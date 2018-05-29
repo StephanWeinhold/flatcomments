@@ -1,2 +1,6 @@
-writeJson
-readJson
+class JsonHandler {
+
+    writeJson
+    readJson
+
+}
