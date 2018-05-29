@@ -13,7 +13,7 @@ class Comment {
 	protected $answerToCommentId;
 	protected $answerToCount;
     
-	public static function buildCommentFromPost($articleId, $id, $dateTimeWritten) {
+	public static function buildCommentFromPost() {
 		if ($_POST['address'] !== '') {
 			throw new Exception('No bots allowed.', 310);
 		}
