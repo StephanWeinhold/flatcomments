@@ -1,6 +1,7 @@
 <?php
 class Comment
 {
+	
 	protected $id;
 	protected $articleId;
 	protected $userName;
