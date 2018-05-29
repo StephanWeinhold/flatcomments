@@ -1,6 +1,5 @@
 <?php
-class Comment
-{
+class Comment {
 	
 	protected $id;
 	protected $articleId;
