@@ -1,5 +1,5 @@
 <?php
-class Comment {
+class Comment implements JsonSerializable {
 	
 	protected $id;
 	protected $articleId;
@@ -13,20 +13,20 @@ class Comment {
 	protected $answerToCommentId;
 	protected $answerToCount;
     
-	public static function buildCommentFromPost() {
-		if ($_POST['address'] !== '') {
+	public static function buildCommentFromPost($articleId, $userName, $userEmailAddress, $comment) {
+		/* if ($_POST['address'] && $_POST['address'] !== '') {
 			throw new Exception('No bots allowed.', 310);
 		}
 		
 		$articleId = trim($_POST['articleId']);
-        $userName = trim($_POST['name']);
+		$userName = trim($_POST['name']);
 		$userEmailAddress = trim($_POST['email']);
-		$comment = trim($_POST['comment']);
+		$comment = trim($_POST['comment']); */
         
         $timestampWritten = time();
-        $id = $this->buildId($userName, $articleId, $timestampWritten);
+        $id = Comment::buildId($userName, $articleId, $timestampWritten);
 		
-		return new Comment($id, $articleId, $userName, $userEmailAddress, $comment);
+		return new Comment($id, $articleId, $userName, $userEmailAddress, $comment, $timestampWritten);
 	}
 	
 	function __construct($id, $articleId, $userName, $userEmailAddress, $comment, $timestampWritten, $unlocked = false) {
@@ -43,15 +43,15 @@ class Comment {
         return $articleId . '_' . strtolower(substr($userName, 0, 5)) . '_' . $timestampWritten;
     }
     
-	public function id() { 
+	public function getId() { 
         return $this->id;
     }
 	
-	public function articleId() {
+	public function getArticleId() {
 		return $this->articleId;
 	}
 	
-	public function userName()
+	public function getUserName()
 	{
 		if ($this->userName === null) {
 			return '';
@@ -60,11 +60,7 @@ class Comment {
 		return htmlentities($this->userName);
 	}
 	
-	public function userNameRaw() { 
-        return $this->userName; 
-    }
-	
-	public function userEmailAddress() {
+	public function getUserEmailAddress() {
 		if ($this->userEmailAddress === null) {
 			return '';
 		}
@@ -72,24 +68,32 @@ class Comment {
 		return htmlentities($this->userEmailAddress);
 	}
 	
-	public function userEmailAddressRaw() {
-		return $this->userEmailAddress;
-	}
-	
-	public function comment() {
+	public function getComment() {
 		$comment = $this->comment;
 		
-		$message = htmlentities($message);		
-		$message = markdown($message);
+		$comment = htmlentities($comment);		
+		//$comment = markdown($comment);
 		
 		return strip_tags($comment, '<a><p><br>');
 	}
 	
-	public function timestampWritten() {
+	public function getTimestampWritten() {
 		return $this->timestampWritten;
 	}
 	
-	public function unlocked() {
+	public function getUnlocked() {
 		return $this->unlocked === true;
 	}
+	
+	public function jsonSerialize() {
+        return [
+			'id' => $this->getId(),
+			'articleId' => $this->getArticleId(),
+			'userName' => $this->getUserName(),
+			'userEmailAddress' => $this->getUserEmailAddress(),
+			'comment' => $this->getComment(),
+			'timestampWritten' => $this->getTimestampWritten(),
+			'unlocked' => $this->getUnlocked()
+        ];
+    }
 }
