@@ -43,16 +43,10 @@ class Comment implements JsonSerializable {
         return $articleId . '_' . strtolower(substr($userName, 0, 5)) . '_' . $timestampWritten;
     }
     
-	public function getId() { 
-        return $this->id;
-    }
+	public function getId() { return $this->id; }	
+	public function getArticleId() { return $this->articleId; }
 	
-	public function getArticleId() {
-		return $this->articleId;
-	}
-	
-	public function getUserName()
-	{
+	public function getUserName() {
 		if ($this->userName === null) {
 			return '';
 		}
@@ -69,21 +63,14 @@ class Comment implements JsonSerializable {
 	}
 	
 	public function getComment() {
-		$comment = $this->comment;
-		
+		$comment = $this->comment;		
 		$comment = htmlentities($comment);		
-		//$comment = markdown($comment);
-		
+		//$comment = markdown($comment);		
 		return strip_tags($comment, '<a><p><br>');
 	}
 	
-	public function getTimestampWritten() {
-		return $this->timestampWritten;
-	}
-	
-	public function getUnlocked() {
-		return $this->unlocked === true;
-	}
+	public function getTimestampWritten() { return $this->timestampWritten; }	
+	public function getUnlocked() { return $this->unlocked; }
 	
 	public function jsonSerialize() {
         return [
