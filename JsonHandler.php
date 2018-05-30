@@ -1,6 +1,10 @@
+<?php
 class JsonHandler {
 
-    writeJson
-    readJson
+    public function writeJson($toWrite) {
+        return json_encode($toWrite);
+    }
+    
+    //readJson
 
 }
