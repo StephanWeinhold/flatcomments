@@ -13,7 +13,7 @@ class Comments {
     public function checkForComments($articleId) {
         $filePath = __DIR__ . '/' . $articleId . '.json';
         $file = FileHandler::readFile($filePath);
-        $aComments = JsonHandler::readJson($file);
+        $aComments = JsonHandler::readJson($file, true);
         
         if (count($aComments) > 0) {
             return $aComments;
