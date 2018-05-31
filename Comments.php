@@ -10,4 +10,16 @@ class Comments {
         ));
     }
     
+    public function checkForComments($articleId) {
+        $filePath = __DIR__ . '/' . $articleId . '.json';
+        $file = FileHandler::readFile($filePath);
+        $aComments = JsonHandler::readJson($file);
+        
+        if (count($aComments) > 0) {
+            return $aComments;
+        }
+        
+        return false;
+    }
+    
 }
