@@ -6,7 +6,7 @@ require_once 'FileHandler.php';
 $articleId = 1;
 $filePath = __DIR__ . '/' . $articleId . '.json';
 $file = FileHandler::readFile($filePath);
-$comments = JsonHandler::readJson($file);
+$comments = JsonHandler::readJson($file, false);
 
 foreach ($comments as $comment) {
     ?>
