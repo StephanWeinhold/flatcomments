@@ -1,21 +1,25 @@
 <?php
 require_once 'Comment.php';
-require_once 'Comments.php';
 require_once 'JsonHandler.php';
 require_once 'FileHandler.php';
 
 $articleId = 1;
 $filePath = __DIR__ . '/' . $articleId . '.json';
 $file = FileHandler::readFile($filePath);
-$object = JsonHandler::readJson($file);
+$aComments = JsonHandler::readJson($file);
 
-print_r($oComments);
+print_r($aComments);
 
-/* foreach ($comments as $comment) {
-    echo $comment . '<br>';
+foreach ($aComments as $key => $comment) {
+    echo $key . ': ' . $comment . '<br>';
+}
+
+echo '<br><br>###################<br><br>';
+
+foreach ($aComments as $comment) {
     ?>
     <div>
         <span><?= $comment['userName']; ?></span>
     </div>
     <?php
-} */
+}
