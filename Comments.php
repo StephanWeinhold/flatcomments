@@ -23,9 +23,27 @@ class Comments {
         return [];
     }
 
-    public static function getComments($articleId) {
+    public static function getComments($articleId, $filterUnlocked = true) {
         $file = FileHandler::readFile(__DIR__ . '/' . $articleId . '.json');
-        return JsonHandler::readJson($file, false);
+        $comments = JsonHandler::readJson($file, false);
+        
+        if ($filterUnlocked === true) {
+            $comments = Comments::filterUnlockedComments($comments);
+        }
+        
+        return $comments;
+    }
+    
+    private static function filterUnlockedComments($commentsRaw) {
+        $comments = [];
+        
+        foreach ($commentsRaw as $comment) {
+            if ($comment->unlocked == true) {
+                array_push($comments, $comment);
+            }
+        }
+        
+        return $comments;
     }
     
     public static function getTimeElapsed($timestamp, $level = 6) {

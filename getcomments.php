@@ -1,10 +1,12 @@
 <?php
 require_once 'Comment.php';
 require_once 'Comments.php';
+$comments = Comments::getComments($_GET['articleId']);
 ?>
 <div class="container">
+    <h3><?= count($comments); ?> comments</h3>
     <?php
-    foreach (array_reverse(Comments::getComments($_GET['articleId'])) as $comment) {
+    foreach (array_reverse($comments) as $comment) {
         if ($comment->unlocked == true) {
             ?>
             <div class="box">
