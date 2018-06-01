@@ -10,6 +10,7 @@ $publishedTimestamp = time();
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" rel="stylesheet">
 </head>
 <body>
+    <h1>comments</h1>
     <?php
     if ($publishedTimestamp > strtotime('-90 days')) {
         ?>
