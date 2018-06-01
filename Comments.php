@@ -1,4 +1,7 @@
 <?php
+require_once 'JsonHandler.php';
+require_once 'FileHandler.php';
+
 class Comments {
 
     public function router() {
@@ -11,15 +14,18 @@ class Comments {
     }
 
     public static function checkForComments($articleId) {
-        $filePath = __DIR__ . '/' . $articleId . '.json';
-        $file = FileHandler::readFile($filePath);
-        $aComments = JsonHandler::readJson($file, true);
+        $comments = Comments::getComments($articleId);
 
-        if (count($aComments) > 0) {
-            return $aComments;
+        if (count($comments) > 0) {
+            return $comments;
         }
 
         return [];
+    }
+
+    public static function getComments($articleId) {
+        $file = FileHandler::readFile(__DIR__ . '/' . $articleId . '.json');
+        return JsonHandler::readJson($file, false);
     }
 
 }
