@@ -6,4 +6,5 @@
 ## missing
 
 - [ ] Minimal DB/functionality for the JSON-files.
-- [ ] Kirby-integration
+- [ ] Kirby integration
+- [ ] Add some additional spam prevention
