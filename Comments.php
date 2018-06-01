@@ -1,6 +1,6 @@
 <?php
 class Comments {
-    
+
     public function router() {
         $kirby->set('route', array(
             'pattern' => 'my/awesome/url',
@@ -9,17 +9,17 @@ class Comments {
             }
         ));
     }
-    
-    public function checkForComments($articleId) {
+
+    public static function checkForComments($articleId) {
         $filePath = __DIR__ . '/' . $articleId . '.json';
         $file = FileHandler::readFile($filePath);
         $aComments = JsonHandler::readJson($file, true);
-        
+
         if (count($aComments) > 0) {
             return $aComments;
         }
-        
-        return false;
+
+        return [];
     }
-    
+
 }
