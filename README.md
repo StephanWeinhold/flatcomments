@@ -6,3 +6,4 @@
 ## missing
 
 - [ ] Minimal DB/functionality for the JSON-files.
+- [ ] Kirby-integration
