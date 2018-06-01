@@ -1,4 +1,6 @@
 <?php
+require_once 'SpamHandler.php';
+
 class Comment implements JsonSerializable {
 
 	protected $id;
@@ -25,18 +27,24 @@ class Comment implements JsonSerializable {
 
 		$timestampWritten = time();
 		$id = Comment::buildId($userName, $articleId, $timestampWritten);
+		
+		$unlocked = false;
+		
+		if (SpamHandler::checkCommentForSpam($comment)) {
+			$unlocked = true;
+		}
 
-		return new Comment($id, $articleId, $userName, $userEmailAddress, $comment, $timestampWritten);
+		return new Comment($id, $articleId, $userName, $userEmailAddress, $comment, $timestampWritten, $unlocked);
 	}
 
-	function __construct($id, $articleId, $userName, $userEmailAddress, $comment, $timestampWritten, $unlocked = false) {
+	function __construct($id, $articleId, $userName, $userEmailAddress, $comment, $timestampWritten, $unlocked) {
 		$this->id = $id;
 		$this->articleId = $articleId;
 		$this->userName = $userName;
 		$this->userEmailAddress = $userEmailAddress;
 		$this->comment = $comment;
 		$this->timestampWritten = $timestampWritten;
-		$this->unlocked = $unlocked === true;
+		$this->unlocked = $unlocked;
 	}
 
 	private static function buildId($userName, $articleId, $timestampWritten) {
