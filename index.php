@@ -1,7 +1,7 @@
 <?php
 require_once 'Comment.php';
-require_once 'JsonHandler.php';
-require_once 'FileHandler.php';
+require_once 'Comments.php';
+$articleId = 1;
 ?>
 <html>
 <head>
@@ -45,12 +45,7 @@ require_once 'FileHandler.php';
         </div>
     </section>
     <?php
-    $articleId = 1;
-    $filePath = __DIR__ . '/' . $articleId . '.json';
-    $file = FileHandler::readFile($filePath);
-    $comments = JsonHandler::readJson($file, false);
-
-    foreach ($comments as $comment) {
+    foreach (array_reverse(Comments::getComments($articleId)) as $comment) {
         ?>
         <section class="comment">
             <div class="container">
