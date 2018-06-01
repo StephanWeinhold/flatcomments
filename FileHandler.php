@@ -12,7 +12,7 @@ class FileHandler {
     }
 
     public static function writeFile($filePath, $json) {
-        if (!file_put_contents($filePath, $json.PHP_EOL , LOCK_EX | JSON_PRETTY_PRINT | JSON_FORCE_OBJECT)) {
+        if (!file_put_contents($filePath, $json, LOCK_EX | JSON_PRETTY_PRINT | JSON_FORCE_OBJECT)) {
             throw new Exception('JSON couldn\'t be written to file.', 500);
         }
     }
