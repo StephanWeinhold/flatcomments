@@ -11,12 +11,13 @@ $publishedTimestamp = time();
 </head>
 <body>
     <h1>comments</h1>
+    <span id="article-id" data-id="<?= $articleId; ?>"></span>
     <?php
     if ($publishedTimestamp > strtotime('-90 days')) {
         ?>
         <section>
             <div class="container">
-                <form>
+                <form id="send-comment">
                     <div class="field">
                         <label class="label">Your name</label>
                         <div class="control">
@@ -55,13 +56,35 @@ $publishedTimestamp = time();
     <section id="comments"></section>
     
     <script>
-        let r = new XMLHttpRequest();
-        r.open('GET', '/comments/getcomments.php?articleId=1', true);
-        r.onreadystatechange = function() {
-            if (r.readyState != 4 || r.status != 200) return;
-            	document.getElementById('comments').innerHTML = r.responseText;
+        let cmmnt = {};
+        cmmnt.$ = function(id) { return document.getElementById(id); };
+        cmmnt.articleId = cmmnt.$('article-id').getAttribute('data-id');
+    
+        cmmnt.sendAjax = function(method, url, params, callback) {
+            let r = new XMLHttpRequest();
+            r.open(method, url, true);
+            r.onreadystatechange = function() {
+                if (r.readyState != 4 || r.status != 200) return;
+                	callback(r.responseText);
             };
-        r.send();
+            r.send(params);
+        };
+        
+        cmmnt.fillCommentContainer = function(responseText) {
+            cmmnt.$('comments').innerHTML = responseText;
+        }
+        
+        cmmnt.$('send-comment').addEventListener('submit', function(e) {
+            e.preventDefault();
+            cmmnt.sendComment();
+            return false;
+        });
+        
+        cmmnt.sendComment = function() {
+            cmmnt.sendAjax('GET', '/comments/getcomments.php?articleId=1', '', cmmnt.fillCommentContainer);
+        };
+        
+        cmmnt.sendAjax('GET', '/comments/getcomments.php?articleId=' + cmmnt.articleId, '', cmmnt.fillCommentContainer);
     </script>
 </body>
 </html>
