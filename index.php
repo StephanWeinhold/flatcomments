@@ -44,45 +44,16 @@ $articleId = 1;
             </form>
         </div>
     </section>
-    <?php
-    foreach (array_reverse(Comments::getComments($articleId)) as $comment) {
-        ?>
-        <section class="comment">
-            <div class="container">
-                <div class="box">
-                    <article class="media">
-                        <div class="media-content">
-                            <div class="content">
-                                <p>
-                                    <strong><?= $comment->userName; ?></strong>
-                                    <?php
-                                    if ($comment->userEmailAddress != '') {
-                                        ?>
-                                        <small><?= $comment->userEmailAddress; ?></small>
-                                        <?php
-                                    }
-                                    ?>
-                                    <small><?= date("d.m.Y h:i", $comment->timestampWritten); ?></small>
-                                    <br>
-                                    <?= $comment->comment; ?>
-                                </p>
-                            </div>
-                            <nav class="level is-mobile">
-                                <div class="level-left">
-                                    <a class="level-item" aria-label="like">
-                                        <span class="icon is-small">
-                                            <i class="icon-heart" aria-hidden="true"></i>
-                                        </span>
-                                    </a>
-                                </div>
-                            </nav>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-        <?php
-    }
-    ?>
+    <section id="comments"></section>
+    
+    <script>
+        let r = new XMLHttpRequest();
+        r.open('GET', '/comments/getcomments.php?articleId=1', true);
+        r.onreadystatechange = function() {
+            if (r.readyState != 4 || r.status != 200) return;
+            	document.getElementById('comments').innerHTML = r.responseText;
+            };
+        r.send();
+    </script>
 </body>
 </html>
