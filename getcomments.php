@@ -19,7 +19,7 @@ require_once 'Comments.php';
                                 <?php
                             }
                             ?>
-                            <small><?= date("d.m.Y h:i", $comment->timestampWritten); ?></small>
+                            <small><?= Comments::getTimeElapsed($comment->timestampWritten); ?></small>
                             <br>
                             <?= $comment->comment; ?>
                         </p>
