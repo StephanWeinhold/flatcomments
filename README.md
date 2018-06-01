@@ -5,8 +5,8 @@
 
 ## missing
 
-- [x] ~~Minimal DB-functionality for the JSON-files.~~
-- [ ] Kirby integration (router, email:, etc.)
+- [x] Minimal DB-functionality for the JSON-files.
+- [ ] Kirby integration (router, email:, etc.).
 - [x] Add some additional spam prevention
 - [ ] Add better error handling
 
