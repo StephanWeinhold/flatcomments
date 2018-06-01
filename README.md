@@ -1,4 +1,8 @@
 # comments
 
 - [x] Receive blog comments via POST and write them to JSON-files.  
-- [ ] Display these comments to a given article via AJAX.
+- [x] Display these comments to a given article via AJAX.
+
+## missing
+
+- [ ] Minimal DB/functionality for the JSON-files.
