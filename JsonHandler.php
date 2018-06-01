@@ -1,11 +1,11 @@
 <?php
 class JsonHandler {
 
-    public function readJson($toRead, $assoc) {
+    public static function readJson($toRead, $assoc) {
         return json_decode($toRead, $assoc);
     }
-    
-    public function writeJson($toWrite) {
+
+    public static function writeJson($toWrite) {
         return json_encode($toWrite);
     }
 
