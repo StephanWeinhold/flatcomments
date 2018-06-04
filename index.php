@@ -1,7 +1,6 @@
 <?php
 require_once 'Comment.php';
 require_once 'Comments.php';
-$articleId = 1;
 $publishedTimestamp = time();
 ?>
 <html>
@@ -11,7 +10,7 @@ $publishedTimestamp = time();
 </head>
 <body>
     <h1>comments</h1>
-    <span id="article-id" data-id="<?= $articleId; ?>"></span>
+    <span id="article-id" data-id="1"></span>
     <?php
     if ($publishedTimestamp > strtotime('-90 days')) {
         ?>
@@ -21,21 +20,21 @@ $publishedTimestamp = time();
                     <div class="field">
                         <label class="label">Your name</label>
                         <div class="control">
-                            <input class="input" type="text" placeholder="Name">
+                            <input id="userName" name="userName" class="input" type="text" placeholder="Name">
                         </div>
                     </div>
 
                     <div class="field">
                         <label class="label">Your email address</label>
                         <div class="control">
-                            <input class="input" type="text" placeholder="Email address">
+                            <input id="userEmailAddress" name="userEmailAddress" class="input" type="text" placeholder="Email address">
                         </div>
                     </div>
 
                     <div class="field">
                         <label class="label">Your comment</label>
                         <div class="control">
-                            <textarea class="textarea" placeholder="Comment"></textarea>
+                            <textarea id="comment" name="comment" class="textarea" placeholder="Comment"></textarea>
                         </div>
                     </div>
 
@@ -54,37 +53,52 @@ $publishedTimestamp = time();
     }
     ?>
     <section id="comments"></section>
-    
+
     <script>
         let cmmnt = {};
         cmmnt.$ = function(id) { return document.getElementById(id); };
         cmmnt.articleId = cmmnt.$('article-id').getAttribute('data-id');
-    
-        cmmnt.sendAjax = function(method, url, params, callback) {
+
+        cmmnt.sendAjax = function(url, callback) {
             let r = new XMLHttpRequest();
-            r.open(method, url, true);
+            r.open('GET', url, true);
             r.onreadystatechange = function() {
                 if (r.readyState != 4 || r.status != 200) return;
                 	callback(r.responseText);
             };
-            r.send(params);
+            r.send();
         };
-        
+
         cmmnt.fillCommentContainer = function(responseText) {
             cmmnt.$('comments').innerHTML = responseText;
         }
-        
+
+        cmmnt.getForm = function() {
+            let data = '?articleId=' + cmmnt.articleId + '&userName=' + cmmnt.$('userName').value + '&userEmailAddress=' + cmmnt.$('userEmailAddress').value + '&comment=' + cmmnt.$('comment').value;
+
+            return data;
+        }
+
         cmmnt.$('send-comment').addEventListener('submit', function(e) {
             e.preventDefault();
             cmmnt.sendComment();
             return false;
         });
-        
+
         cmmnt.sendComment = function() {
-            cmmnt.sendAjax('GET', '/comments/getcomments.php?articleId=1', '', cmmnt.fillCommentContainer);
+            cmmnt.sendAjax('/comments/savecomment.php' + cmmnt.getForm(), cmmnt.commentSent);
         };
-        
-        cmmnt.sendAjax('GET', '/comments/getcomments.php?articleId=' + cmmnt.articleId, '', cmmnt.fillCommentContainer);
+
+        cmmnt.commentSent = function() {
+            cmmnt.$('send-comment').style.display = 'none';
+            cmmnt.getComments();
+        }
+
+        cmmnt.getComments = function() {
+            cmmnt.sendAjax('/comments/getcomments.php?articleId=' + cmmnt.articleId, cmmnt.fillCommentContainer);
+        }
+
+        cmmnt.getComments();
     </script>
 </body>
 </html>
