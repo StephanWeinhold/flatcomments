@@ -10,6 +10,8 @@ I've been looking at dozens of commenting tools and none had everything that I w
 - being lightweight
 - saving data as JSON inside flat files
 - indipendent from a CMS or framework
+- saving comments via AJAX
+- loading comments via AJAX
 - plain JS, no jQuery
 - trying to reduce spam via
     - a blacklist
