@@ -7,20 +7,23 @@ class SpamHandler {
         }
         return false;
     }
-    
+
     private static function countLinks($comment) {
         return substr_count($comment, 'href');
     }
-    
+
     private static function checkBlacklist($comment) {
-        $blacklist = file('https://raw.githubusercontent.com/splorp/wordpress-comment-blacklist/master/blacklist.txt');
-        
-        foreach($blacklist as $badword) {
-            if (stripos($comment, trim($badword)) !== false) {
-                return false;
+        if ($blacklist = file('https://raw.githubusercontent.com/splorp/wordpress-comment-blacklist/master/blacklist.txt')) {
+            foreach($blacklist as $badword) {
+                if (stripos($comment, trim($badword)) !== false) {
+                    return false;
+                }
             }
         }
-        
+        else {
+            return false;
+        }
+
         return true;
     }
 
