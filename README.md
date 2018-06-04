@@ -28,7 +28,7 @@ This is needed so **flatcomments** knows in which JSON-file to save the comments
 
 The params you can send are:
 
-- `$articleId` - An ID of the article/Page where you want to display the comments.
+- `$articleId` - An ID of the article/page where you want to display the comments.
     **flatcomments** will name the JSON-file(s) after this.
 - `$userName` - The name of the person who wrote the comment.
 - `$userEmailAddress` - The email address of the person who wrote the comment.
