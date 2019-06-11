@@ -1,7 +1,7 @@
 <?php
 require_once 'Comment.php';
 require_once 'Comments.php';
-$comments = Comments::getComments($_GET['articleId']);
+$comments = Comments::getComments(filter_input(INPUT_GET, 'articleId', FILTER_SANITIZE_STRING));
 ?>
 <div class="container">
     <h3><?= count($comments); ?> comments</h3>
