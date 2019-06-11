@@ -5,8 +5,8 @@ require_once 'FileHandler.php';
 class Comments {
 
     public static function getParam($key) {
-        if (array_key_exists($key, $_GET)) {
-            return $_GET[$key];
+        if (array_key_exists($key, filter_input_array(INPUT_GET))) {
+            return filter_input(INPUT_GET, $key, FILTER_SANITIZE_STRING);
         }
 
         return false;
